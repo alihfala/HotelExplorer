@@ -1,0 +1,101 @@
+@model IEnumerable<HotelsModel>
+@{
+    ViewBag.Title = "Hotels";
+}
+
+<style>
+    .custom-container-width {
+        max-width: 1000px; 
+        margin: 0 auto;
+        gap: 10px;
+    }
+    .button-group {
+        display: flex;
+        gap: 10px;
+    }
+
+    .custom-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .custom-card {
+        width: 300px;
+        height: 100%;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .custom-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .custom-card .card-body {
+        padding: 20px;
+    }
+    .card-body{
+         color: #000;
+    }
+
+    .custom-page-bg {
+        background-color: #000; 
+        color: #fff; 
+    }
+.rating {
+    color: gold; 
+    font-size: 20px; 
+}
+
+.star {
+    display: inline-block;
+}
+    .rounded-circle {
+        position: absolute;
+        top: 80px;
+        right: 30px;
+    }
+</style>
+
+<body class="custom-page-bg">
+    <div class="container">
+        <div class="row custom-container">
+            <div class="col-md-12">
+                <a asp-controller="Hotels" asp-action="CreateHotels" class="btn btn-primary rounded-circle">
+                    <span class="bi bi-plus">+</span>
+                </a>
+            </div>
+
+            @foreach (var hotel in Model)
+            {
+                <div class="col-md-3">
+                    <div class="card mb-2 custom-card">
+                        <img src="@hotel.ImageUrl" class="card-img-top" alt="Hotel">
+                        <div class="card-body">
+                            <h5 class="card-title">@hotel.Name</h5>
+                            <div class="rating">
+                                @for (int i = 0; i < hotel.Rating; i++)
+                                {
+                                    <span class="star">&#9733;</span>
+                                }
+                            </div>
+                            <p class="card-text">Location: @hotel.Location</p>
+                            <div class="button-group">
+                                <a asp-controller="Hotels" asp-action="viewHotels" asp-route-id="@hotel.Id" class="btn btn-primary">View</a>
+                                <form method="post" action="@Url.Action("Delete", "Hotels", new { id = hotel.Id })" onsubmit="return confirm('Are you sure you want to delete this hotel?')">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this hotel?')" >Delete</button>
+                                </form>
+                            </div>                      
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+

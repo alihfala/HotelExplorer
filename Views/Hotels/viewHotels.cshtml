@@ -1,0 +1,57 @@
+@model lab6Dotnet.Models.HotelsModel
+
+<style>
+    body {
+        color: #fff;
+        background-color: rgb(0, 0, 0);
+    }
+
+    .container {
+        display: flex;
+        align-items: center;
+    }
+
+    .hotel-details {
+        flex: 1;
+    }
+
+    .hotel-photo {
+        flex: 1;
+        margin-left: 20px;
+    }
+
+    .hotel-photo img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .rating {
+        color: gold;
+        font-size: 24px;
+    }
+</style>
+
+<div class="container">
+    <div class="hotel-details">
+        @if (Model != null)
+        {
+            <h1>@Model.Name</h1>
+            <p><span class="rating">&#9733;</span><span class="rating">&#9733;</span><span class="rating">&#9733;</span><span class="rating">&#9733;</span><span class="rating">&#9733;</span></p>
+            <p><h4>Description:<br></h4> @Model.Description</p>
+            <p><strong>Location:</strong> @Model.Location</p>
+            <p><strong>Rooms:</strong> @Model.Rooms</p>
+            <p><strong>Phone:</strong> @Model.Phone</p>
+            
+        }
+        else
+        {
+            <p>Hotel not found.</p>
+        }
+    </div>
+    <div class="hotel-photo">
+        @if (Model != null && !string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <img class="card-img-top" src="@Model.ImageUrl" alt="Hotel Photo">
+        }
+    </div>
+</div>
